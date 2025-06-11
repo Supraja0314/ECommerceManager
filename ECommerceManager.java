@@ -68,3 +68,58 @@ public class ECommerceManager {
                     System.out.println("Invalid choice.");
             }
         } while (choice != 5);
+    }
+
+    private static void addProduct(Scanner scanner) {
+        System.out.print("Enter product name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter product price: ");
+        double price = scanner.nextDouble();
+        scanner.nextLine(); // consume newline
+
+        Product product = new Product(name, price);
+        productCatalog.put(nextId++, product);
+        System.out.println("Product added successfully.");
+    }
+
+    private static void updateProduct(Scanner scanner) {
+        System.out.print("Enter product ID to update: ");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // consume newline
+
+        if (productCatalog.containsKey(id)) {
+            System.out.print("Enter new price: ");
+            double newPrice = scanner.nextDouble();
+            scanner.nextLine(); // consume newline
+
+            productCatalog.get(id).updatePrice(newPrice);
+            System.out.println("Product price updated.");
+        } else {
+            System.out.println("Product ID not found.");
+        }
+    }
+
+    private static void deleteProduct(Scanner scanner) {
+        System.out.print("Enter product ID to delete: ");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // consume newline
+
+        if (productCatalog.containsKey(id)) {
+            productCatalog.remove(id);
+            System.out.println("Product deleted.");
+        } else {
+            System.out.println("Product ID not found.");
+        }
+    }
+
+    private static void viewProducts() {
+        if (productCatalog.isEmpty()) {
+            System.out.println("No products available.");
+        } else {
+            System.out.println("=== Product Catalog ===");
+            for (Map.Entry<Integer, Product> entry : productCatalog.entrySet()) {
+                System.out.println("ID: " + entry.getKey() + " | " + entry.getValue());
+            }
+        }
+    }
+}
